@@ -39,7 +39,9 @@ Før du kan jobbe med data i Fabric, må du opprette et arbeidsområde med Fabri
 3. Sørg for at “Lakehouse schemas (Public Preview)” er deaktivert.
 4. Etter ett minutt vil lakehouset bli opprettet.
 
-![Plassholder for skjermbilde av nytt lakehouse](/assets/new-lakehouse.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-lakehouse.png)
+
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 
 **Utforsk Lakehouse:**
 - **Tables**: Tabeller som kan forespørres med SQL, basert på Delta Lake-format.
@@ -55,7 +57,9 @@ Før du kan jobbe med data i Fabric, må du opprette et arbeidsområde med Fabri
 2. I Lakehouse Explorer, opprett en undermappe `data` under **Files**.
 3. Last opp `sales.csv` til `Files/data`.
 
-![Plassholder for skjermbilde av upload](/assets/upload-sales.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/uploaded-sales-file.png)
+
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 
 4. Velg filen for å forhåndsvise innholdet.
 
@@ -73,11 +77,17 @@ Før du kan jobbe med data i Fabric, må du opprette et arbeidsområde med Fabri
 1. Gå til `Files/data` og velg `sales.csv`.
 2. Velg **Load to Tables > New table**.
 3. Sett tabellnavn til `sales` og bekreft.
+4. I Explorer-ruten, velg sales-tabellen som er opprettet for å se dataene.
 
-![Plassholder for tabellvisning](/assets/sales-table.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/table-preview.png)
 
-4. Forhåndsvis tabellen og se de underliggende filene (`_delta_log`).
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 
+5. På menyen (…) for sales-tabellen, velg Vis filer for å se de underliggende filene for denne tabellen.
+
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/delta-table-files.png)
+
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 ---
 
 ## Bruk SQL til å forespørre tabeller
@@ -99,7 +109,9 @@ Klikk på ▷ **Run**-knappen for å kjøre spørringen.
 
 Resultatet skal vise total omsetning (Revenue) per produkt, sortert synkende etter høyest omsetning.
 
-![Plassholder for skjermbilde av SQL-spørring med resultater](/assets/sql-query-results.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 
 ---
 
@@ -114,7 +126,9 @@ Selv om mange datafagfolk er komfortable med SQL, kan analytikere med erfaring f
 
 Dra tabellen `sales` inn i det nye visuelle redigeringspanelet som åpnes.
 
-![Plassholder for skjermbilde av Visual Query-editor](/assets/visual-query-editor.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 
 ---
 
@@ -125,7 +139,9 @@ Dra tabellen `sales` inn i det nye visuelle redigeringspanelet som åpnes.
    - `SalesOrderNumber`
    - `SalesOrderLineNumber`
 
-![Plassholder for skjermbilde av Choose columns-dialog](/assets/choose-columns.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 
 ---
 
@@ -142,7 +158,9 @@ Dra tabellen `sales` inn i det nye visuelle redigeringspanelet som åpnes.
 
 Når du er ferdig, vil resultatpanelet vise antall linjeelementer per salgsordre.
 
-![Plassholder for skjermbilde av Visual Query med resultater](/assets/visual-query-results.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 
 ---
 
