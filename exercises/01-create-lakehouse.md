@@ -26,7 +26,7 @@ Før du kan jobbe med data i Fabric, må du opprette et arbeidsområde med Fabri
 3. Opprett et nytt arbeidsområde med valgfritt navn og velg en lisensieringsmodus som inkluderer Fabric-kapasitet (Trial, Premium eller Fabric).
 4. Når arbeidsområdet åpnes, skal det være tomt.
 
-![New Workspace - Microsoft Learning](https://microsoftlearning.github.io/mslearn-fabric/Instructions/Labs/Images/new-workspace.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
 
 *Source: Microsoft Learning (mslearn-fabric lab materials)*
 
