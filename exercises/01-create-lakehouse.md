@@ -56,17 +56,12 @@ Før du kan jobbe med data i Fabric, må du opprette et arbeidsområde med Fabri
    `https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/sales.csv`
 2. I Lakehouse Explorer, opprett en undermappe `data` under **Files**.
 3. Last opp `sales.csv` til `Files/data`.
-4. I Explorer-ruten, velg sales-tabellen som er opprettet for å se dataene.
-
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/table-preview.png)
-
-*Source: Microsoft Learning (mslearn-fabric lab materials)*
    
-5. På menyen (…) for sales-tabellen, velg Vis filer for å se de underliggende filene for denne tabellen.
-
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/delta-table-files.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/uploaded-sales-file.png)
 
 *Source: Microsoft Learning (mslearn-fabric lab materials)*
+
+4. Velg filen for å forhåndsvise innholdet.
 
 ---
 
@@ -114,7 +109,7 @@ Klikk på ▷ **Run**-knappen for å kjøre spørringen.
 
 Resultatet skal vise total omsetning (Revenue) per produkt, sortert synkende etter høyest omsetning.
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/sql-query.png)
 
 *Source: Microsoft Learning (mslearn-fabric lab materials)*
 
@@ -131,7 +126,7 @@ Selv om mange datafagfolk er komfortable med SQL, kan analytikere med erfaring f
 
 Dra tabellen `sales` inn i det nye visuelle redigeringspanelet som åpnes.
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/visual-query.png)
 
 *Source: Microsoft Learning (mslearn-fabric lab materials)*
 
@@ -144,7 +139,7 @@ Dra tabellen `sales` inn i det nye visuelle redigeringspanelet som åpnes.
    - `SalesOrderNumber`
    - `SalesOrderLineNumber`
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/choose-columns.png)
 
 *Source: Microsoft Learning (mslearn-fabric lab materials)*
 
@@ -163,7 +158,7 @@ Dra tabellen `sales` inn i det nye visuelle redigeringspanelet som åpnes.
 
 Når du er ferdig, vil resultatpanelet vise antall linjeelementer per salgsordre.
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/visual-query-results.png)
 
 *Source: Microsoft Learning (mslearn-fabric lab materials)*
 
