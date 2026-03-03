@@ -56,12 +56,17 @@ Før du kan jobbe med data i Fabric, må du opprette et arbeidsområde med Fabri
    `https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/sales.csv`
 2. I Lakehouse Explorer, opprett en undermappe `data` under **Files**.
 3. Last opp `sales.csv` til `Files/data`.
+4. I Explorer-ruten, velg sales-tabellen som er opprettet for å se dataene.
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/uploaded-sales-file.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/table-preview.png)
 
 *Source: Microsoft Learning (mslearn-fabric lab materials)*
+   
+5. På menyen (…) for sales-tabellen, velg Vis filer for å se de underliggende filene for denne tabellen.
 
-4. Velg filen for å forhåndsvise innholdet.
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/delta-table-files.png)
+
+*Source: Microsoft Learning (mslearn-fabric lab materials)*
 
 ---
 
