@@ -21,7 +21,7 @@ I Microsoft Fabric tilbyr et lakehouse svært skalerbar fil-lagring i OneLake (b
 
 Før du kan jobbe med data i Fabric, må du opprette et arbeidsområde med Fabric trial aktivert.
 
-1. Gå til [Microsoft Fabric-hjem](https://app.fabric.microsoft.com/home?experience=fabric) og logg inn med dine Fabric-legitimasjon.
+1. Gå til [Microsoft Fabric-hjem](https://app.powerbi.com/) og logg inn med dine Fabric-legitimasjon.
 2. Velg **Workspaces** i venstremenyen 🗇.
 3. Opprett et nytt arbeidsområde med valgfritt navn og velg en lisensieringsmodus som inkluderer Fabric-kapasitet (Trial, Premium eller Fabric).
 4. Når arbeidsområdet åpnes, skal det være tomt.
