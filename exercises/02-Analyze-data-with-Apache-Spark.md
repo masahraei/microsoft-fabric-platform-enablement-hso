@@ -350,8 +350,7 @@ I denne øvelsen har du:
 
 > 📌 **Kreditering:**  
 > Denne øvelsen er oversatt og tilpasset fra Microsoft Learn – DP-600:  
-> https://microsoftlearning.github.io/mslearn-fabric/Instructions/Labs/01-lakehouse.html
-
+> https://learn.microsoft.com/en-us/training/modules/use-apache-spark-work-files-lakehouse/
 
 
 
