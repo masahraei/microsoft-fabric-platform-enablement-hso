@@ -310,7 +310,7 @@ import seaborn as sns
 
 plt.clf()
 
-ax = sns.barplot(x="OrderYear", y="GrossRevenue", data=df_sales)
+ax = sns.barplot(x="Year", y="Revenue", data=df_sales)
 
 plt.show()
 ```
