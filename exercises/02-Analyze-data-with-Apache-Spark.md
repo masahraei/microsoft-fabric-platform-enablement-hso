@@ -32,7 +32,7 @@ I denne øvelsen skal du:
 ![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/2-new-lakehouse.png)
 
 ### Last opp data
-1. Last ned data (orders.zip)  
+1. Last ned data ([orders.zip](https://github.com/masahraei/microsoft-fabric-platform-enablement-hso/blob/main/datasets/orders.zip))  
 2. Pakk ut → du får:
    - 2019.csv  
    - 2020.csv  
