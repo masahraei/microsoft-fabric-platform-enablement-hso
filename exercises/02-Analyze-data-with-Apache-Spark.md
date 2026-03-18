@@ -18,7 +18,7 @@ I denne øvelsen skal du:
 2. Velg **Workspaces**  
 3. Opprett et nytt workspace med Fabric capacity (Trial/Premium)  
 4. Åpne workspace  
-
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
 ---
 
 ## 2. Opprett Lakehouse og last opp data
@@ -26,7 +26,7 @@ I denne øvelsen skal du:
 1. Velg **New item → Lakehouse**  
 2. Gi lakehouse et navn  
 3. Deaktiver **Lakehouse schemas**  
-
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
 ### Last opp data
 1. Last ned data (orders.zip)  
 2. Pakk ut → du får:
@@ -36,7 +36,9 @@ I denne øvelsen skal du:
 
 3. I Lakehouse:
    - Gå til **Files**
+   - Velg Upload → Upload folder
    - Last opp hele `orders`-mappen  
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
 
 ---
 
@@ -44,30 +46,77 @@ I denne øvelsen skal du:
 
 1. Velg **Create → Notebook**  
 2. Gi den navn: `Sales analysis`  
-
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
 ### Legg til introduksjon (Markdown)
 
 ```markdown
 # Sales order data exploration
 Use this notebook to explore sales order data
 ```
-
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
 ---
 
 ## 4. Last inn data (DataFrame)
 
 Velg 2019.csv → Load data → Spark
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
 ```python
 df = spark.read.format("csv").option("header","true").load("Files/orders/2019.csv")
 display(df.limit(100))
 ```
 Kjør cellen ▶️
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+
+---
+
+
+## 5. Riktig håndtering av header
+Endre koden:
+```python
+df = spark.read.format("csv").option("header","false").load("Files/orders/2019.csv")
+```
+Kjør på nytt.
 
 
 ---
 
 
-## 5. Utforsk data
+## 6. Definer schema
+
+```python
+from pyspark.sql.types import *
+
+orderSchema = StructType([
+    StructField("SalesOrderNumber", StringType()),
+    StructField("SalesOrderLineNumber", IntegerType()),
+    StructField("OrderDate", DateType()),
+    StructField("CustomerName", StringType()),
+    StructField("Email", StringType()),
+    StructField("Item", StringType()),
+    StructField("Quantity", IntegerType()),
+    StructField("UnitPrice", FloatType()),
+    StructField("Tax", FloatType())
+])
+
+df = spark.read.format("csv").schema(orderSchema).load("Files/orders/2019.csv")
+
+display(df)
+```
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+
+---
+
+## 6. Les alle filer
+
+```python
+df = spark.read.format("csv").schema(orderSchema).load("Files/orders/*.csv")
+
+display(df)
+```
+
+---
+
+## 7. Utforsk data
 
 Filtrer kolonner
 ```python
@@ -79,17 +128,37 @@ print(customers.distinct().count())
 display(customers.distinct())
 ```
 
-Gruppér data
+Alternativ metode:
+```python
+customers = df.select("CustomerName", "Email")
+```
+
+Filtrer spesifikt produkt:
+```python
+customers = df.select("CustomerName", "Email").where(df['Item']=='Road-250 Red, 52')
+
+print(customers.count())
+print(customers.distinct().count())
+
+display(customers.distinct())
+```
+
+---
+## 8. Aggreger og grupper data
+
+```python
+productSales = df.select("Item", "Quantity").groupBy("Item").sum()
+
+display(productSales)
+```
 ```python
 from pyspark.sql.functions import *
 
-yearlySales = df.select(year(col("OrderDate")).alias("Year")) \
-                .groupBy("Year") \
-                .count() \
-                .orderBy("Year")
+yearlySales = df.select(year(col("OrderDate")).alias("Year")).groupBy("Year").count().orderBy("Year")
 
 display(yearlySales)
 ```
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
 
 ---
 
