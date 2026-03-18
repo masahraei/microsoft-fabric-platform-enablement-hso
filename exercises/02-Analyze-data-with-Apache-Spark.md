@@ -17,16 +17,20 @@ I denne øvelsen skal du:
 1. Gå til Microsoft Fabric og logg inn  
 2. Velg **Workspaces**  
 3. Opprett et nytt workspace med Fabric capacity (Trial/Premium)  
-4. Åpne workspace  
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+4. Åpne workspace
+   
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/1-new-workspace.png)
+
 ---
 
 ## 2. Opprett Lakehouse og last opp data
 
 1. Velg **New item → Lakehouse**  
 2. Gi lakehouse et navn  
-3. Deaktiver **Lakehouse schemas**  
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+3. Deaktiver **Lakehouse schemas**
+   
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/2-new-lakehouse.png)
+
 ### Last opp data
 1. Last ned data (orders.zip)  
 2. Pakk ut → du får:
@@ -37,35 +41,42 @@ I denne øvelsen skal du:
 3. I Lakehouse:
    - Gå til **Files**
    - Velg Upload → Upload folder
-   - Last opp hele `orders`-mappen  
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+   - Last opp hele `orders`-mappen
+     
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/3-uploaded-files.png)
 
 ---
 
 ## 3. Opprett Notebook
 
 1. Velg **Create → Notebook**  
-2. Gi den navn: `Sales analysis`  
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+2. Gi den navn: `Sales analysis`
+   
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/4-new-notebook.png)
+
 ### Legg til introduksjon (Markdown)
 
 ```markdown
 # Sales order data exploration
 Use this notebook to explore sales order data
 ```
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/5-name-notebook-markdown.png)
+
 ---
 
 ## 4. Last inn data (DataFrame)
 
 Velg 2019.csv → Load data → Spark
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/6-explorer-notebook-view.png)
+
 ```python
 df = spark.read.format("csv").option("header","true").load("Files/orders/2019.csv")
 display(df.limit(100))
 ```
 Kjør cellen ▶️
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/7-auto-generated-load.png)
 
 ---
 
@@ -102,11 +113,11 @@ df = spark.read.format("csv").schema(orderSchema).load("Files/orders/2019.csv")
 
 display(df)
 ```
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/8-define-schema.png)
 
 ---
 
-## 6. Les alle filer
+## 7. Les alle filer
 
 ```python
 df = spark.read.format("csv").schema(orderSchema).load("Files/orders/*.csv")
@@ -116,7 +127,7 @@ display(df)
 
 ---
 
-## 7. Utforsk data
+## 8. Utforsk data
 
 Filtrer kolonner
 ```python
@@ -144,7 +155,7 @@ display(customers.distinct())
 ```
 
 ---
-## 8. Aggreger og grupper data
+## 9. Aggreger og grupper data
 
 ```python
 productSales = df.select("Item", "Quantity").groupBy("Item").sum()
@@ -158,11 +169,11 @@ yearlySales = df.select(year(col("OrderDate")).alias("Year")).groupBy("Year").co
 
 display(yearlySales)
 ```
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/new-workspace.png)
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/9-spark-sql-dataframe.png)
 
 ---
 
-## 6. Transformér data
+## 10. Transformér data
 
 Filtrer kolonner
 ```python
@@ -179,7 +190,7 @@ display(transformed_df.limit(5))
 
 ---
 
-## 7. Lagre data (Parquet)
+## 11. Lagre data (Parquet)
 
 Filtrer kolonner
 ```python
@@ -191,18 +202,19 @@ print("Data lagret!")
 ---
 
 
-## 8. Les data på nytt
+## 12. Les Parquet-data
 
 Filtrer kolonner
 ```python
 orders_df = spark.read.format("parquet").load("Files/transformed_data/orders")
 display(orders_df)
 ```
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/10-parquet-files.png)
 
 ---
 
 
-## 9. Partisjonering (bedre ytelse)
+## 13. Partisjonering (bedre ytelse)
 
 Filtrer kolonner
 ```python
@@ -210,6 +222,9 @@ orders_df.write.partitionBy("Year","Month") \
     .mode("overwrite") \
     .parquet("Files/partitioned_data")
 ```
+
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/11-partitioned-data.png)
+
 Les data for 2021:
 ```python
 orders_2021_df = spark.read.format("parquet") \
@@ -221,18 +236,22 @@ display(orders_2021_df)
 ---
 
 
-## 10. Opprett tabell
+## 14. Jobb med tabeller og SQL
 
 Filtrer kolonner
 ```python
+# Create a new table
 df.write.format("delta").saveAsTable("salesorders")
-```
 
+# Get the table description
+spark.sql("DESCRIBE EXTENDED salesorders").show(truncate=False)
+```
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/12-salesorder-table.png)
 
 ---
 
 
-## 11. Kjør SQL
+## 15. Kjør SQL
 
 Filtrer kolonner
 ```sql
@@ -249,8 +268,11 @@ ORDER BY OrderYear
 ---
 
 
-## 12. Visualisering
-
+## 16. Visualisering
+```sql
+%%sql
+SELECT * FROM salesorders
+```
 Enkel graf i notebook
 
  - likk på resultat → New chart
@@ -262,9 +284,11 @@ Enkel graf i notebook
    - X: Item
       
    - Y: Quantity
-
+     
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-2/13-built-in-chart.png)
 
 Visualisering med Python
+ - Matplotlib
 ```python
 from matplotlib import pyplot as plt
 
@@ -280,11 +304,22 @@ plt.title("Revenue per Year")
 plt.show()
 ```
 
+ - Seaborn
+```python
+import seaborn as sns
+
+plt.clf()
+
+ax = sns.barplot(x="OrderYear", y="GrossRevenue", data=df_sales)
+
+plt.show()
+```
+
 
 ---
 
 
-## 13. Rydd opp
+## 17. Rydd opp
 
  - Stopp notebook session
 
