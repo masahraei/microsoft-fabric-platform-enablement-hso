@@ -18,7 +18,7 @@ https://app.fabric.microsoft.com
 4. Velg en kapasitet (Trial / Premium / Fabric)
 5. Åpne workspace
 
-📸 **[BILDE PLASSHOLDER – Tomt workspace]**
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
 
 ---
 
@@ -31,7 +31,7 @@ https://app.fabric.microsoft.com
 
 ⚠️ Viktig: Dette kan ikke endres senere
 
-📸 **[BILDE PLASSHOLDER – Ny lakehouse]**
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/02-new-lakehouse.png)
 
 ---
 
@@ -43,7 +43,7 @@ https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip
 2. Pakk ut filen
 3. Last opp mappen **orders** til Lakehouse → Files
 
-📸 **[BILDE PLASSHOLDER – Opplastede CSV-filer]**
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/03-upload-products.png)
 
 ---
 
@@ -52,7 +52,7 @@ https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip
 1. Klikk **Create → Notebook**
 2. Gi navn (f.eks. `DeltaLakeLab`)
 
-📸 **[BILDE PLASSHOLDER – Notebook]**
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/04-new-notebook.png)
 
 ---
 
@@ -80,7 +80,7 @@ df = spark.sql("SELECT * FROM salesorders LIMIT 1000")
 display(df)
 ```
 
-📸 [BILDE PLASSHOLDER – Tabellresultat]
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
 
 ---
 
@@ -112,7 +112,7 @@ WHERE Quantity = 0;
 DESCRIBE HISTORY salesorders;
 ```
 
-📸 [BILDE PLASSHOLDER – Historikk tabell]
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
 
 ---
 
@@ -134,7 +134,7 @@ Gå til:
 - Klikk på ... ved tabellen
 - Velg Maintenance → Run OPTIMIZE
 
-📸 [BILDE PLASSHOLDER – Optimize]
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
 
 
 ---
@@ -146,7 +146,7 @@ Gå til:
 VACUUM salesorders RETAIN 168 HOURS;
 ```
 
-📸 [BILDE PLASSHOLDER – Optimize]
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
 
 
 ---
@@ -157,7 +157,7 @@ VACUUM salesorders RETAIN 168 HOURS;
 df.write.format("delta").partitionBy("Item").saveAsTable("salesorders_partitioned")
 ```
 
-📸 [BILDE PLASSHOLDER – Optimize]
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
 
 
 ---
