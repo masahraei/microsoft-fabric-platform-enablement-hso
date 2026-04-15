@@ -125,17 +125,6 @@ SELECT * FROM products;
 
 ---
 
-## Oppdater data (SQL)
-
-```sql
-%%sql
-UPDATE salesorders
-SET Tax = Tax * 1.1
-WHERE Quantity > 1;
-```
-
----
-
 ## Versjonering av tabeller
 
 ```sql
