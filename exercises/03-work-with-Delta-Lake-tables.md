@@ -38,7 +38,7 @@ https://app.fabric.microsoft.com
 ## Last opp data
 
 1. Last ned data:  
-https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip
+[https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip](https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv)
 
 2. Pakk ut filen
 3. Last opp mappen **orders** til Lakehouse → Files
