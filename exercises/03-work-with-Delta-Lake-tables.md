@@ -1,6 +1,6 @@
 # Work with Delta Lake tables in Microsoft Fabric (Øvelse)
 
-I denne øvelsen vil du lære hvordan du jobber med Delta Lake-tabeller i Microsoft Fabric ved hjelp av Spark.
+Tabeller i en Microsoft Fabric Lakehouse er basert på det åpne kildekodeformatet Delta Lake. Delta Lake gir støtte for relasjonelle egenskaper for både batch- og strømmedata. I denne øvelsen skal du opprette Delta-tabeller og utforske data ved hjelp av SQL-spørringer.
 
 ⏱️ **Estimert tid:** 45 minutter  
 📌 **Forutsetning:** Du trenger tilgang til en Microsoft Fabric tenant
@@ -50,37 +50,78 @@ https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip
 ## Opprett Notebook
 
 1. Klikk **Create → Notebook**
-2. Gi navn (f.eks. `DeltaLakeLab`)
 
 ![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/04-new-notebook.png)
 
----
-
-## Les data med Spark
-
+2. Gi navn (f.eks. `DeltaLakeLab`)
+3. Gjør første celle om til Markdown og legg inn:
 ```python
-df = spark.read.format("csv").option("header","true").load("Files/orders/*.csv")
+# Delta Lake tables
+Use this notebook to explore Delta Lake functionality
+```
+4. Legg til lakehouse via OneLake catalog
+5. Legg til en kodecelle:
+```python
+from pyspark.sql.types import StructType, IntegerType, StringType, DoubleType
+
+schema = StructType() \
+.add("ProductID", IntegerType(), True) \
+.add("ProductName", StringType(), True) \
+.add("Category", StringType(), True) \
+.add("ListPrice", DoubleType(), True)
+
+df = spark.read.format("csv").option("header","true").schema(schema).load("Files/products/products.csv")
+
 display(df)
 ```
 
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/05-products-schema.png)
+
 ---
 
-## Lag Delta-tabell
+## Opprett Delta-tabeller
 
+Managed tabell
 ```python
-df.write.format("delta").saveAsTable("salesorders")
+df.write.format("delta").saveAsTable("managed_products")
+```
+
+External tabell
+1. Kopier ABFS-path
+2. Bruk koden:
+```python
+df.write.format("delta").saveAsTable("external_products", path="abfs_path/external_products")
+```
+---
+
+## Sammenlign tabeller
+
+```sql
+%%sql
+DESCRIBE FORMATTED managed_products;
+
+%%sql
+DESCRIBE FORMATTED external_products;
+
+%%sql
+DROP TABLE managed_products;
+DROP TABLE external_products;
 ```
 
 ---
 
-## Les fra Delta-tabell
+## Opprett Delta-tabell med SQL
 
-```python
-df = spark.sql("SELECT * FROM salesorders LIMIT 1000")
-display(df)
+```sql
+%%sql
+CREATE TABLE products
+USING DELTA
+LOCATION 'Files/external_products';
+
+%%sql
+SELECT * FROM products;
 ```
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
 
 ---
 
@@ -95,83 +136,136 @@ WHERE Quantity > 1;
 
 ---
 
-## Slett data
+## Versjonering av tabeller
 
 ```sql
 %%sql
-DELETE FROM salesorders
-WHERE Quantity = 0;
+UPDATE products
+SET ListPrice = ListPrice * 0.9
+WHERE Category = 'Mountain Bikes';
+
+%%sql
+DESCRIBE HISTORY products;
+
+delta_table_path = 'Files/external_products'
+current_data = spark.read.format("delta").load(delta_table_path)
+display(current_data)
+
+original_data = spark.read.format("delta").option("versionAsOf", 0).load(delta_table_path)
+display(original_data)
 ```
 
 ---
 
-## Time Travel (historikk)
+## Analyser data med SQL
 
 ```sql
 %%sql
-DESCRIBE HISTORY salesorders;
+CREATE OR REPLACE TEMPORARY VIEW products_view
+AS
+SELECT Category, COUNT(*) AS NumProducts, MIN(ListPrice) AS MinPrice, MAX(ListPrice) AS MaxPrice, AVG(ListPrice) AS AvgPrice
+FROM products
+GROUP BY Category;
+
+SELECT * FROM products_view ORDER BY Category;
 ```
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
+```sql
+%%sql
+SELECT Category, NumProducts
+FROM products_view
+ORDER BY NumProducts DESC
+LIMIT 10;
+```
 
----
+Når dataene er returnert, velg + New chart for å vise et av de foreslåtte diagrammene.
 
-## Les tidligere versjon
+![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/06-sql-select.png)
 
 ```python
-df_old = spark.read.format("delta").option("versionAsOf", 0).table("salesorders")
-display(df_old)
+from pyspark.sql.functions import col
+
+df_products = spark.sql("SELECT Category, MinPrice, MaxPrice, AvgPrice FROM products_view").orderBy(col("AvgPrice").desc())
+display(df_products.limit(6))
 ```
 
 
 ---
 
-## Optimaliser tabell
+## Streaming med Delta
 
-Gå til:
+```python
+from notebookutils import mssparkutils
+from pyspark.sql.types import *
 
-- Lakehouse Explorer
-- Klikk på ... ved tabellen
-- Velg Maintenance → Run OPTIMIZE
+inputPath = 'Files/data/'
+mssparkutils.fs.mkdirs(inputPath)
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
+jsonSchema = StructType([
+StructField("device", StringType(), False),
+StructField("status", StringType(), False)
+])
 
+iotstream = spark.readStream.schema(jsonSchema).option("maxFilesPerTrigger", 1).json(inputPath)
+```
 
----
+```python
+device_data = '''{"device":"Dev1","status":"ok"}
+{"device":"Dev2","status":"error"}'''
 
-## VACUUM (rydde gamle filer)
+mssparkutils.fs.put(inputPath + "data.txt", device_data, True)
+```
+
+```python
+delta_stream_table_path = 'Tables/iotdevicedata'
+checkpointpath = 'Files/delta/checkpoint'
+
+deltastream = iotstream.writeStream.format("delta").option("checkpointLocation", checkpointpath).start(delta_stream_table_path)
+```
+
+```python
+delta_stream_table_path = 'Tables/iotdevicedata'
+checkpointpath = 'Files/delta/checkpoint'
+
+deltastream = iotstream.writeStream.format("delta").option("checkpointLocation", checkpointpath).start(delta_stream_table_path)
+```
 
 ```sql
 %%sql
-VACUUM salesorders RETAIN 168 HOURS;
+SELECT * FROM IotDeviceData;
 ```
-
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
-
-
----
-
-## Partisjonering
 
 ```python
-df.write.format("delta").partitionBy("Item").saveAsTable("salesorders_partitioned")
+# Add more data to the source stream
+more_data = '''{"device":"Dev1","status":"ok"}
+{"device":"Dev1","status":"ok"}
+{"device":"Dev1","status":"ok"}
+{"device":"Dev1","status":"ok"}
+{"device":"Dev1","status":"error"}
+{"device":"Dev2","status":"error"}
+{"device":"Dev1","status":"ok"}'''
+
+mssparkutils.fs.put(inputPath + "more-data.txt", more_data, True)
 ```
 
-![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/01-new-workspace.png)
+```sql
+%%sql
+SELECT * FROM IotDeviceData;
+```
 
+```python
+deltastream.stop()
+```
 
 ---
 
-## Oppsummering
+## Rydd opp ressurser
 
 I denne øvelsen har du lært:
 
-- Hva Delta Lake er
-- Hvordan lage Delta-tabeller
-- Hvordan oppdatere og slette data
-- Hvordan bruke time travel
-- Hvordan optimalisere data
-- Hvordan partisjonering fungerer
+- Gå til workspace
+- Åpne innstillinger
+- Velg Remove this workspace
 
 
 ---
