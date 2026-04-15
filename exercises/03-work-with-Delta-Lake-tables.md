@@ -40,8 +40,8 @@ https://app.fabric.microsoft.com
 1. Last ned data:  
 [products.csv](https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv)
 
-2. Pakk ut filen
-3. Last opp mappen **orders** til Lakehouse → Files
+2. Lage en mappe og gi den dette navnet "products"
+3. Last opp filen **products.csv** til Lakehouse → Files → products
 
 ![New Workspace - Microsoft Learning](https://raw.githubusercontent.com/masahraei/microsoft-fabric-platform-enablement-hso/main/images/workshop-3/03-upload-products.png)
 
