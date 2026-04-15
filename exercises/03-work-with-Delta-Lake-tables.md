@@ -135,7 +135,9 @@ WHERE Category = 'Mountain Bikes';
 
 %%sql
 DESCRIBE HISTORY products;
+```
 
+```python 
 delta_table_path = 'Files/external_products'
 current_data = spark.read.format("delta").load(delta_table_path)
 display(current_data)
