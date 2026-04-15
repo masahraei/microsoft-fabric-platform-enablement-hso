@@ -214,13 +214,6 @@ checkpointpath = 'Files/delta/checkpoint'
 deltastream = iotstream.writeStream.format("delta").option("checkpointLocation", checkpointpath).start(delta_stream_table_path)
 ```
 
-```python
-delta_stream_table_path = 'Tables/iotdevicedata'
-checkpointpath = 'Files/delta/checkpoint'
-
-deltastream = iotstream.writeStream.format("delta").option("checkpointLocation", checkpointpath).start(delta_stream_table_path)
-```
-
 ```sql
 %%sql
 SELECT * FROM IotDeviceData;
